@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Deteils - subsOline</title>
+    <!-- IMPORT BOOTSRAP FROM CSS -->
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <!-- IMPORT BOOTSTARTP FROM JAVASCRIPT -->
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- IMPORT AXIOS LIBBRIRY -->
+    <script src="./node_modules/axios/dist/axios.min.js"></script>
+    <!-- Icon title -->
+    <link rel="Icon" href="./pic-image/logo.png">
+
+    <style>
+        /* =====================Loder Sytle=================== */
+        .lds-facebook {
+            display: inline-block;
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+
+        .lds-facebook div {
+            display: inline-block;
+            position: absolute;
+            left: 8px;
+            width: 16px;
+            background: #198754;
+            animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+        }
+
+        .lds-facebook div:nth-child(1) {
+            left: 8px;
+            animation-delay: -0.24s;
+        }
+
+        .lds-facebook div:nth-child(2) {
+            left: 32px;
+            animation-delay: -0.12s;
+        }
+
+        .lds-facebook div:nth-child(3) {
+            left: 56px;
+            animation-delay: 0;
+        }
+
+        @keyframes lds-facebook {
+            0% {
+                top: 8px;
+                height: 64px;
+            }
+
+            50%,
+            100% {
+                top: 24px;
+                height: 32px;
+            }
+        }
+
+        /* =====================Loder Sytle=================== */
+    </style>
+</head>
+
+<body style="background-color: #4b6584;">
+    <!-- ===========================Loder HTML================================== -->
+    <div id="loader" class="d-flex justify-content-center align-items-center"
+        style=" background-color: #d1d8e0; position: fixed; left: 0px; right: 0px; top: 0px; bottom: 0px; margin:auto auto ; z-index: 9999; height: 100px; width: 100px; border-radius: 10px;">
+        <div class="lds-facebook">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <!-- ===========================Loder HTML================================== -->
+    <!-- Modal Registar -->
+    <div class="modal fade" id="registar-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 text-center w-100" id="exampleModalLabel">Registar</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="new-user" class="col-form-label">Username:</label>
+                            <input type="text" class="form-control" id="new-user">
+                        </div>
+                        <div class="mb-3">
+                            <label for="new-name" class="col-form-label">Name</label>
+                            <input type="text" class="form-control" id="new-name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Profile Image:</label>
+                            <input type="file" class="form-control" id="image-input-registar">
+                        </div>
+                        <div class="mb-3">
+                            <label for="new-email" class="col-form-label">Email:</label>
+                            <input type="email" class="form-control" id="new-email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="new-password" class="col-form-label">Password</label>
+                            <input type="password" class="form-control" id="new-password">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="registar()">Registar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Login -->
+    <div class="modal fade" id="login-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 text-center w-100" id="exampleModalLabel">Login</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">User Name:</label>
+                            <input type="text" class="form-control" id="user-input" placeholder="@username">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="col-form-label">Password:</label>
+                            <input type="password" class="form-control" id="password-input"
+                                placeholder="Enter Hard Password">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="logInBtn()">Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add New Post Button -->
+    <div data-bs-toggle="modal" data-bs-target="#new-post" class=" " id="add-btn">
+        <!--  btn add new post <+> -->
+    </div>
+    <!-- Modal Add New Post -->
+    <div class="modal fade" id="new-post" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Create New Post</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Title:</label>
+                            <input type="text" class="form-control" id="postTitle-input">
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" id="postBody-input" style="resize: none;"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Set Image:</label>
+                            <input type="file" class="form-control" id="setImage-input">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="createNewPost()">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ==============LOGOUT MODAL============  -->
+    <!-- Modal -->
+    <div class="modal fade" id="logout-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Logout</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <span>We miss you😢 </span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="logout()" class="btn btn-primary">Are you sure</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ==============LOGOUT MODAL============  -->
+    <!-- showAleart function  -->
+    <div id="success-alert" class="show fade" style="position: fixed; bottom: 0; left: 10px; z-index: 9999;"></div>
+    <div class="container">
+        <nav class="navbar  navbar-expand-lg bg-body-tertiary shadow-lg rounded-bottom-4 pt-3">
+            <div class="container">
+                <a class="navbar-brand fw-bold text-success" href="#">SubsOnline</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Profile</a>
+                        </li>
+                    </ul>
+                    <!-- for none login user -->
+                    <div class="d-flex justify-content-end w-100 " id="logged-in-div">
+                        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
+                            data-bs-target="#login-modal" id="loginBtn" type="button">Login</button>
+                        <button type="button" class="btn btn-outline-dark ms-2" id="registar-login"
+                            data-bs-toggle="modal" data-bs-target="#registar-Modal"
+                            data-bs-whatever="@mdo">Register</button>
+                    </div>
+                    <!-- For Logout user -->
+                    <div class="d-flex justify-content-end w-100 " id="lobout-div">
+                        <img src="./pic-image/team-03.png" id="profile-image" style="width: 40px; border-radius: 4px;"
+                            alt="">
+                        <span style="width: 120px; 
+                        text-align: center;
+                        height: 40px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border: 1px solid;
+                        margin-right: 4px;
+                        border-radius: 4px;
+                        margin-left: 5px;"> Hi! , <span class="text-success" id="nav-userName"> null</span></span>
+                        <button type="button" class="btn btn-outline-danger" id="loginOut" type="button"
+                            data-bs-toggle="modal" data-bs-target="#logout-modal">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- Container in post detils -->
+    <div class="container h-100 pt-5">
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10 pb-3">
+                <h2 class="mb-4 "><span class="text-success me-3" id="username-post">@user</span>post</h2>
+                <div id="post">
+
+                </div>
+                <!-- Comment -->
+                <div id="comment">
+
+                </div>
+                <!-- Comment -->
+            </div>
+            <div class="col-lg-1"></div>
+        </div>
+    </div>
+    <script src="./js/main.js"></script>
+    <script src="./postDetils.js"></script>
+</body>
+
+</html>
